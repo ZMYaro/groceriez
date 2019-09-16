@@ -92,7 +92,7 @@
 				
 				var labelNames = Object.values(board.labelNames)
 					.filter(label => label !== '')
-					.sort((a, b) => a.toLowerCase() < b.toLowerCase());
+					.sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1);
 				
 				var labelsContainer = document.getElementById('labels');
 				labelNames.forEach((labelText) => {
@@ -133,8 +133,8 @@
 					}
 				});
 				
-				getItems.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase());
-				maybeItems.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase());
+				getItems.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
+				maybeItems.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
 				
 				setUpDOM(getItems, maybeItems);
 			}
