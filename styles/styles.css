@@ -1,0 +1,42 @@
+body {
+	background-color: #e8e8e8;
+}
+.card {
+	max-width: 512px;
+	margin: auto;
+}
+
+.appBar h1 {
+	font-size: inherit;
+	margin: 0;
+}
+
+#load-card {
+	text-align: center;
+}
+#progress-bar {
+	display: block;
+	margin: auto;
+}
+#auth-btn {
+	display: none;
+}
+
+#content-card {
+	display: none;
+	padding: 0;
+}
+	#content-card h2 {
+		margin: 1em 0.5em 0.5em;
+	}
+		#content-card h2:first-of-type {
+			margin-top: 0.5em;
+		}
+
+#labels {
+	font-size: 80%;
+}
+
+input[type="checkbox"] {
+	margin: 0 0.125em;
+}
