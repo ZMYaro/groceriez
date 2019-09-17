@@ -6,9 +6,9 @@ var GROCERIES_BOARD_ID = 'uO26DySr',
 	TRELLO_BOARD_GET_URL = '/boards/' + GROCERIES_BOARD_ID,
 	TRELLO_CARDS_GET_URL = '/boards/' + GROCERIES_BOARD_ID + '/cards';
 
-var getList = [],
-	maybeList = [],
-	labels = [],
+var getItems = [],
+	maybeItems = [],
+	labelToggles = [],
 	authBtn,
 	progressBar;
 
@@ -97,7 +97,7 @@ function handleBoardSuccess(board) {
 		
 		listItem.appendChild(labelElement);
 		labelsContainer.appendChild(listItem);
-		labels.push(labelCheckbox);
+		labelToggles.push(labelCheckbox);
 	});
 	
 	progressBar.value = 3;
@@ -106,9 +106,6 @@ function handleBoardSuccess(board) {
 }
 function handleItemsSuccess(items) {
 	progressBar.value = 4;
-	
-	var getItems = [],
-		maybeItems = [];
 	
 	items.forEach(function (item) {
 		if (item.idList === GET_LIST_ID) {
@@ -127,7 +124,10 @@ function handleItemsSuccess(items) {
 function addCardToList(card, list) {
 	list.push({
 		name: card.name,
-		labels: card.labels.map(label => label.name)
+		elem: undefined,
+		labels: card.labels
+			.map(label => label.name)
+			.sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1)
 	});
 }
 function addItemToDOM(item, list) {
@@ -135,13 +135,15 @@ function addItemToDOM(item, list) {
 	listItem.textContent = item.name;
 	listItem.dataset.labels = JSON.stringify(item.labels);
 	list.appendChild(listItem);
+	
+	item.elem = listItem;
 }
 
-function setUpDOM(getItems, maybeItems) {
+function setUpDOM() {
 	progressBar.value = 5;
 	
-	getList = document.getElementById('get-list');
-	maybeList = document.getElementById('maybe-list');
+	var getList = document.getElementById('get-list'),
+		maybeList = document.getElementById('maybe-list');
 	
 	getItems.forEach(function (item) {
 		addItemToDOM(item, getList);
@@ -159,23 +161,20 @@ function setUpDOM(getItems, maybeItems) {
 
 function updateUI() {
 	var activeLabels = [];
-	
-	labels.forEach((label) => {
+	labelToggles.forEach((label) => {
 		if (label.checked) {
 			activeLabels.push(label.value);
 		}
 	});
 	
-	var combinedLists =
-		Array.from(getList.children)
-		.concat(Array.from(maybeList.children));
-	for (var item of combinedLists) {
+	var combinedItems = getItems.concat(maybeItems);
+	for (var item of combinedItems) {
 		// Start the item hidden.
-		item.style.display = 'none';
-		for (var label of JSON.parse(item.dataset.labels)) {
+		item.elem.style.display = 'none';
+		for (var label of item.labels) {
 			if (activeLabels.indexOf(label) !== -1) {
 				// If the label is active, show the item.
-				item.style.removeProperty('display');
+				item.elem.style.removeProperty('display');
 				break;
 			}
 		}
