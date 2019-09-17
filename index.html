@@ -18,13 +18,19 @@
 		<script type="text/javascript" src="scripts/load.js"></script>
 	</head>
 	<body>
-		<div class="appBar z2">
+		<div role="toolbar" class="appBar z2">
 			<h1>GrocerieZ</h1>
+			<a role="button" href="https://trello.com/b/uO26DySr/groceries" target="_blank">
+				<svg role="img" class="icon" viewbox="0 0 24 24">
+					<title>Open on Trello</title>
+					<use href="images/icons/trello.svg#icon" xlink:href="images/icons/trello.svg#icon" />
+				</svg>
+			</a>
 		</div>
 		<div class="card z1" id="load-card">
 			<progress id="progress-bar" min="0" max="6"></progress>
 			<button class="z1" id="auth-btn">
-				<svg role="img" class="icon" aria-hidden="true" viewbox="0 0 24 24">
+				<svg role="img" class="icon" aria-hidden="true" viewbox="0 0 24 24" style="margin-right: 0.25em;">
 					<use href="images/icons/trello.svg#icon" xlink:href="images/icons/trello.svg#icon" />
 				</svg>
 				<span>Authenticate with Trello</span>
