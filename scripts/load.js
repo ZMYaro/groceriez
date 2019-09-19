@@ -131,25 +131,33 @@ function addCardToList(card, list) {
 	});
 }
 function addItemToDOM(item, list) {
-	var listItem = document.createElement('li');
+	var listItem = document.createElement('li'),
+		actionBtn = document.createElement('button');
 	listItem.textContent = item.name;
 	listItem.dataset.labels = JSON.stringify(item.labels);
+	actionBtn.innerHTML = CART_ADD_ICON_SVG;
+	actionBtn.onclick = () => addToCart(item);
+	actionBtn.style.float = 'right';
+	listItem.appendChild(actionBtn);
 	list.appendChild(listItem);
 	
 	item.elem = listItem;
+	item.actionBtn = actionBtn;
 }
 
 function setUpDOM() {
 	progressBar.value = 5;
 	
-	var getList = document.getElementById('get-list'),
-		maybeList = document.getElementById('maybe-list');
+	getItems.elem = document.getElementById('get-list');
+	maybeItems.elem = document.getElementById('maybe-list');
 	
 	getItems.forEach(function (item) {
-		addItemToDOM(item, getList);
+		addItemToDOM(item, getItems.elem);
+		item.originalList = getItems;
 	});
 	maybeItems.forEach(function (item) {
-		addItemToDOM(item, maybeList);
+		addItemToDOM(item, maybeItems.elem);
+		item.originalList = maybeItems;
 	});
 	
 	progressBar.value = 6;
@@ -157,6 +165,7 @@ function setUpDOM() {
 	// Hide the load bar and show the content.
 	document.getElementById('load-card').style.display = 'none';
 	document.getElementById('content-card').style.display = 'block';
+	document.getElementById('cart-card').style.display = 'block';
 }
 
 function updateUI() {

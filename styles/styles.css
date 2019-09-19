@@ -25,6 +25,11 @@ button .icon,
 	
 	fill: currentColor;
 }
+	.list li button .icon,
+	.list li [role="button"] .icon {
+		vertical-align: middle;
+		fill: #40c4ff;
+	}
 
 #load-card {
 	text-align: center;
@@ -37,14 +42,17 @@ button .icon,
 	display: none;
 }
 
-#content-card {
+#content-card,
+#cart-card {
 	display: none;
 	padding: 0;
 }
-	#content-card h2 {
+	#content-card h2,
+	#cart-card h2 {
 		margin: 1em 0.5em 0.5em;
 	}
-		#content-card h2:first-of-type {
+		#content-card h2:first-of-type,
+		#cart-card h2:first-of-type {
 			margin-top: 0.5em;
 		}
 
