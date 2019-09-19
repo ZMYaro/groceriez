@@ -16,7 +16,7 @@ Array.from =
 	Array.from ||
 	function (arrLike) { return Array.prototype.slice.call(arrLike); };
 
-window.onload = function () {
+window.addEventListener('load', function () {
 	authBtn = document.getElementById('auth-btn');
 	progressBar = document.getElementById('progress-bar');
 	
@@ -46,7 +46,7 @@ window.onload = function () {
 	};
 	
 	Trello.authorize(trelloAuthParams);
-};
+});
 
 function handleAuthFailure(err) {
 	if (typeof(err) !== 'undefined') {

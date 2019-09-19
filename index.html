@@ -16,10 +16,17 @@
 		<script type="text/javascript" src="//api.trello.com/1/client.js?key=720ef2a8a7f410f9e7e4559528e0c7a9"></script>
 		
 		<script type="text/javascript" src="scripts/load.js"></script>
+		<script type="text/javascript" src="scripts/cart.js"></script>
 	</head>
 	<body>
 		<div role="toolbar" class="appBar z2">
 			<h1>GrocerieZ</h1>
+			<button id="cart-btn">
+				<svg role="img" class="icon" viewbox="0 0 24 24">
+					<title>Open cart</title>
+					<use href="images/icons/cart.svg#icon" xlink:href="images/icons/cart.svg#icon" />
+				</svg>
+			</button>
 			<a role="button" href="https://trello.com/b/uO26DySr/groceries" target="_blank">
 				<svg role="img" class="icon" viewbox="0 0 24 24">
 					<title>Open on Trello</title>
@@ -43,6 +50,10 @@
 			<ul class="list" id="get-list"></ul>
 			<h2>Maybe get</h2>
 			<ul class="list" id="maybe-list"></ul>
+		</div>
+		<div class="card z2" id="cart-card">
+			<h2>In cart</h2>
+			<ul class="list" id="cart-list"></ul>
 		</div>
 	</body>
 </html>
