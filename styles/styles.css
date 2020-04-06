@@ -1,9 +1,16 @@
 body {
 	background-color: #e8e8e8;
+	padding-top: 56px;
+	padding-left: 0;
+	padding-right: 0;
 }
 .card {
 	max-width: 512px;
-	margin: auto;
+	border-radius: 0;
+	margin: 0 auto;
+
+	transition-property: margin, padding, border-radius;
+	transition-duration: 0.2s;
 }
 
 .appBar {
@@ -55,6 +62,9 @@ button .icon,
 		#cart-card h2:first-of-type {
 			margin-top: 0.5em;
 		}
+	#cart-card {
+		border-radius: 0;
+	}
 
 #labels {
 	font-size: 87.5%;
@@ -69,8 +79,9 @@ input[type="checkbox"] {
 	top: 0;
 	bottom: 0;
 	right: 0;
-	width: 360px;
-	max-width: 95%;
+	width: 22.5em;
+	max-width: 90%;
+	max-width: calc(100% - 3.5em);
 	
 	z-index: 4;
 	transform: translateX(100%);
@@ -79,9 +90,17 @@ input[type="checkbox"] {
 	#cart-card.open {
 		transform: translateX(0);
 	}
+@media (min-width: 512px) {
+	body {
+		padding-top: 88px; /* MZ default */
+	}
+	.card {
+		border-radius: 2px;
+	}
+}
 @media (min-width: 800px) {
 	body {
-		padding-right: 384px;
+		padding-right: 24em;
 	}
 	#cart-btn {
 		display: none;
