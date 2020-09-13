@@ -9,7 +9,8 @@ var CART_ADD_ICON_SVG =
 		'<svg role="img" class="icon" aria-hidden="true" viewbox="0 0 24 24">' +
 			'<title>Remove from cart</title>' +
 			'<use href="images/icons/cart_remove.svg#icon" xlink:href="images/icons/cart_remove.svg#icon" />' +
-		'</svg>';
+		'</svg>',
+	TRELLO_CARD_UPDATE_URL = '/cards/';
 
 var cartItems = [];
 
@@ -37,18 +38,32 @@ window.addEventListener('load', function () {
 	});
 }, false);
 
-function addToCart(addedItem) {
+function initAddToCart(addedItem) {
+	Trello.put(TRELLO_CARD_UPDATE_URL + addedItem.id,
+		{ idList: CART_LIST_ID },
+		() => finishAddToCart(addedItem),
+		handleItemMoveFailure);
+}
+
+function finishAddToCart(addedItem) {
 	addItemToAlphabetizedList(addedItem, addedItem.originalList, cartItems);
 	
 	addedItem.actionBtn.innerHTML = CART_REMOVE_ICON_SVG;
 	addedItem.actionBtn.onclick = () => removeFromCart(addedItem);
 }
 
+function handleItemMoveFailure(err) {
+	if (typeof(err) !== 'undefined') {
+		console.error(err);
+	}
+	alert('Failed to move item :(');
+}
+
 function removeFromCart(removedItem) {
 	addItemToAlphabetizedList(removedItem, cartItems, removedItem.originalList);
 	
 	removedItem.actionBtn.innerHTML = CART_ADD_ICON_SVG;
-	removedItem.actionBtn.onclick = () => addToCart(removedItem);
+	removedItem.actionBtn.onclick = () => initAddToCart(removedItem);
 }
 
 function addItemToAlphabetizedList(addedItem, oldList, newList) {

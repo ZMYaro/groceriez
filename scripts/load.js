@@ -3,6 +3,7 @@
 var GROCERIES_BOARD_ID = 'uO26DySr',
 	GET_LIST_ID = '55a4080d3d59ac0e523f7992',
 	MAYBE_LIST_ID = '55a407b199712e482a4a342d',
+	CART_LIST_ID = '55a407bd96a7c6d96a90bfd3',
 	TRELLO_BOARD_GET_URL = '/boards/' + GROCERIES_BOARD_ID,
 	TRELLO_CARDS_GET_URL = '/boards/' + GROCERIES_BOARD_ID + '/cards';
 
@@ -27,7 +28,7 @@ window.addEventListener('load', function () {
 		interactive: false,
 		scope: {
 			read: true,
-			write: false,
+			write: true,
 			account: false
 		},
 		expiration: 'never',
@@ -112,17 +113,21 @@ function handleItemsSuccess(items) {
 			addCardToList(item, getItems);
 		} else if (item.idList === MAYBE_LIST_ID) {
 			addCardToList(item, maybeItems);
+		} else if (item.idList === CART_LIST_ID) {
+			addCardToList(item, cartItems);
 		}
 	});
 	
 	getItems.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
 	maybeItems.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
+	cartItems.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
 	
-	setUpDOM(getItems, maybeItems);
+	setUpDOM();
 }
 
 function addCardToList(card, list) {
 	list.push({
+		id: card.id,
 		name: card.name,
 		elem: undefined,
 		labels: card.labels
@@ -136,7 +141,7 @@ function addItemToDOM(item, list) {
 	listItem.textContent = item.name;
 	listItem.dataset.labels = JSON.stringify(item.labels);
 	actionBtn.innerHTML = CART_ADD_ICON_SVG;
-	actionBtn.onclick = () => addToCart(item);
+	actionBtn.onclick = () => initAddToCart(item);
 	actionBtn.style.float = 'right';
 	listItem.appendChild(actionBtn);
 	list.appendChild(listItem);
@@ -158,6 +163,10 @@ function setUpDOM() {
 	maybeItems.forEach(function (item) {
 		addItemToDOM(item, maybeItems.elem);
 		item.originalList = maybeItems;
+	});
+	cartItems.forEach(function (item) {
+		addItemToDOM(item, cartItems.elem);
+		item.originalList = getItems;
 	});
 	
 	progressBar.value = 6;
