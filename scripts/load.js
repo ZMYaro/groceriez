@@ -3,7 +3,6 @@
 var GROCERIES_BOARD_ID = 'uO26DySr',
 	GET_LIST_ID = '55a4080d3d59ac0e523f7992',
 	MAYBE_LIST_ID = '55a407b199712e482a4a342d',
-	CART_LIST_ID = '55a407bd96a7c6d96a90bfd3',
 	TRELLO_BOARD_GET_URL = '/boards/' + GROCERIES_BOARD_ID,
 	TRELLO_CARDS_GET_URL = '/boards/' + GROCERIES_BOARD_ID + '/cards';
 
@@ -12,6 +11,9 @@ var getItems = [],
 	labelToggles = [],
 	authBtn,
 	progressBar;
+
+getItems.id = GET_LIST_ID;
+maybeItems.id = MAYBE_LIST_ID;
 
 Array.from =
 	Array.from ||
@@ -140,8 +142,8 @@ function addItemToDOM(item, list) {
 		actionBtn = document.createElement('button');
 	listItem.textContent = item.name;
 	listItem.dataset.labels = JSON.stringify(item.labels);
-	actionBtn.innerHTML = CART_ADD_ICON_SVG;
-	actionBtn.onclick = () => initAddToCart(item);
+	actionBtn.innerHTML = (list === cartItems.elem ? CART_REMOVE_ICON_SVG : CART_ADD_ICON_SVG);
+	actionBtn.onclick = (list === cartItems.elem ? () => initRemoveFromCart(item) : () => initAddToCart(item));
 	actionBtn.style.float = 'right';
 	listItem.appendChild(actionBtn);
 	list.appendChild(listItem);
