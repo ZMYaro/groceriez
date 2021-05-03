@@ -78,7 +78,7 @@ input[type="checkbox"] {
 	position: fixed;
 	top: 0;
 	bottom: 0;
-	right: 0;
+	right: -24px;
 	width: 22.5em;
 	max-width: 90%;
 	max-width: calc(100% - 3.5em);
