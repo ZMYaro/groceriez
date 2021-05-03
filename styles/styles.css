@@ -2,6 +2,11 @@ body {
 	background-color: #e8e8e8;
 	padding-top: 48px;
 }
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #121212;
+	}
+}
 .card {
 	max-width: 512px;
 }
